@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <time.h>
 
-int main(int argc, char const *argv[])
+int main()
 {
-
     while (1)
     {
         time_t timer = time(NULL);
-        printf("Those output come from child, %ld\n", timer);
+        struct tm *t = localtime(&timer);
+        printf("Those output come from child,  %s", asctime(t));
     }
     return 0;
 }
