@@ -19,7 +19,7 @@ int main(int argc, char const *argv[]) {
   sem_t *sem_queue_mutex = sem_open(SEM_QUEUE_MUTEX_NAME, O_RDWR);
 
   for (;;) {
-    usleep(rand() % 100000 + 100000);
+    usleep(rand() % 100000 + 100000 * FULL);
     sem_wait(sem_queue_len);
     sem_wait(sem_queue_mutex);
 

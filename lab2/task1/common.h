@@ -25,3 +25,5 @@ struct queue {
     char buf[BUF_SIZE];
     int done;
 };
+
+const int FULL = 1;
