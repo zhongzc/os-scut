@@ -18,17 +18,25 @@ int main(int argc, char const *argv[]) {
   sem_t *sem_queue_len = sem_open(SEM_QUEUE_LEN_NAME, O_RDWR);
   sem_t *sem_queue_mutex = sem_open(SEM_QUEUE_MUTEX_NAME, O_RDWR);
 
-  for (int i = 0; i < CONSUMER_TIMES; i++) {
+  for (;;) {
     usleep(rand() % 100000 + 100000);
-
     sem_wait(sem_queue_len);
     sem_wait(sem_queue_mutex);
 
+    // queue is empty
     if (q->size == 0) {
-      sem_post(sem_queue_mutex);
-      i--;
-      continue;
+      if (q->done == PRODUCER_CNT) {
+        // done
+        sem_post(sem_queue_mutex);
+        sem_post(sem_queue_len);
+        break;
+      } else {
+        sem_post(sem_queue_mutex);
+        continue;
+      }
     }
+
+    // consume a product
     q->size--;
     char c = q->buf[q->con_idx];
     q->con_idx = (q->con_idx + 1) % BUF_SIZE;

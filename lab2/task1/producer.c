@@ -21,7 +21,7 @@ int main(int argc, char const *argv[]) {
   sem_t *sem_queue_len = sem_open(SEM_QUEUE_LEN_NAME, O_RDWR);
   sem_t *sem_queue_mutex = sem_open(SEM_QUEUE_MUTEX_NAME, O_RDWR);
 
-  for (int i = 0; i < PRODUCER_TIMES; i++) {
+  for (int i = 0; i < PRODUCT_CNT; i++) {
     usleep(rand() % 100000);
 
     sem_wait(sem_queue_mutex);
@@ -43,6 +43,10 @@ int main(int argc, char const *argv[]) {
     sem_post(sem_queue_mutex);
     sem_post(sem_queue_len);
   }
+  sem_wait(sem_queue_mutex);
+  q->done++;
+  sem_post(sem_queue_mutex);
+  sem_post(sem_queue_len);
 
   // close shared memory and semaphore
   sem_close(sem_queue_len);

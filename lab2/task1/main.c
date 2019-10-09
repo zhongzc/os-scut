@@ -36,7 +36,7 @@ int main(void) {
   sem_close(sem_queue_mutex);
 
   // init queue
-  q->size = q->pro_idx = q->con_idx = 0;
+  q->size = q->pro_idx = q->con_idx = q->done = 0;
   memset(q->buf, 0, BUF_SIZE);
   shmdt(q);
 
