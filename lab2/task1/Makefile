@@ -5,14 +5,14 @@ CC = clang
 all: main
 	./main
 
-main: producer consumer
-	${CC} main.c -o main
+main: main.c producer consumer
+	${CC} main.c -o main -lpthread
 
-producer:
-	${CC} producer.c -o producer
+producer: producer.c
+	${CC} producer.c -o producer -lpthread
 
-consumer:
-	${CC} consumer.c -o consumer
+consumer: consumer.c
+	${CC} consumer.c -o consumer -lpthread
 
 clean:
 	rm main producer consumer

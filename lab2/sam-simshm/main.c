@@ -11,7 +11,6 @@ void exec_writer() {
     const char *writer = "./writer";
     execl(writer, writer, 0);
   }
-  wait(NULL);
 }
 
 void exec_reader() {
@@ -19,7 +18,6 @@ void exec_reader() {
     const char *reader = "./reader";
     execl(reader, reader, 0);
   }
-  wait(NULL);
 }
 
 int main(void) {
@@ -27,7 +25,9 @@ int main(void) {
   int shmid = shmget(semkey, 1024 * sizeof(char), IPC_CREAT | 0660);
 
   exec_writer();
+  wait(NULL);
   exec_reader();
+  wait(NULL);
 
   shmctl(shmid, IPC_RMID, NULL);
   return 0;
