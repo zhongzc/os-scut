@@ -14,7 +14,7 @@
 
 int main(void) {
   /* We initialize the semaphore counter to 1 (INITIAL_VALUE) */
-  sem_t *semaphore = sem_open(SEM_NAME, O_CREAT | O_EXCL, 0644, INITIAL_VALUE);
+  sem_t *semaphore = sem_open(SEM_NAME, O_CREAT, 0644, INITIAL_VALUE);
 
   /* Close the semaphore as we won't be using it in the parent process */
   sem_close(semaphore);
