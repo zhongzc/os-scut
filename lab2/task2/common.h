@@ -14,7 +14,7 @@ const int SEM_CONSUMERS_MUTEX_INIT_VALUE = 1;
 const char *const SEM_BARBER_WAKEUP_NAME = "/barber_wakeup";
 const int SEM_BARBER_WAKEUP_INIT_VALUE = 0;
 
-const int FREE = 1;
+const int FREE = 0;
 
 struct consumers {
   int size;

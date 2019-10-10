@@ -27,8 +27,6 @@ int main(void) {
   // shared memory allocating
   key_t semkey = ftok(FTOK_PATH, FTOK_ID);
   int shmid = shmget(semkey, sizeof(struct consumers), IPC_CREAT | PERM);
-  shmctl(shmid, IPC_RMID, NULL);
-  shmid = shmget(semkey, sizeof(struct consumers), IPC_CREAT | PERM);
   struct consumers *csm = shmat(shmid, NULL, 0);
 
   // semaphore allocating
