@@ -9,6 +9,8 @@
 #include "common.h"
 
 int main(int argc, char const *argv[]) {
+  const char *p_name = argv[1];
+
   // fetch shared memory
   key_t semkey = ftok(FTOK_PATH, FTOK_ID);
   int shmid = shmget(semkey, sizeof(struct queue), PERM);
@@ -40,7 +42,7 @@ int main(int argc, char const *argv[]) {
     q->size--;
     char c = q->buf[q->con_idx];
     q->con_idx = (q->con_idx + 1) % BUF_SIZE;
-    printf("consumer %d: fetch '%c',   buffer size: %d\n", getpid(), c, q->size);
+    printf("consumer %s: fetch '%c',   buffer size: %d\n", p_name, c, q->size);
 
     sem_post(sem_queue_mutex);
   }

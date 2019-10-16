@@ -38,7 +38,7 @@ int main(int argc, char const *argv[]) {
     q->size++;
     q->buf[q->pro_idx] = c;
     q->pro_idx = (q->pro_idx + 1) % BUF_SIZE;
-    printf("producer %d: put   '%c',   buffer size: %d\n", getpid(), c, q->size);
+    printf("producer %2d: put   '%c',   buffer size: %d\n", cap, c, q->size);
 
     sem_post(sem_queue_mutex);
     sem_post(sem_queue_len);

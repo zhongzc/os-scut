@@ -17,9 +17,11 @@ void exec_producer(int i) {
   }
 }
 
-void exec_consumer() {
+void exec_consumer(int i) {
   if (fork() == 0) {
-    execl(CONSUMER, CONSUMER, 0);
+    char idx[4];
+    sprintf(idx, "%2d", i);
+    execl(CONSUMER, CONSUMER, idx, 0);
   }
 }
 
@@ -42,7 +44,7 @@ int main(void) {
 
   // exec producer and consumer program
   for (int i = 0; i < PRODUCER_CNT; i++) exec_producer(i);
-  for (int i = 0; i < CONSUMER_CNT; i++) exec_consumer();
+  for (int i = 0; i < CONSUMER_CNT; i++) exec_consumer(i);
   for (int i = 0; i < PRODUCER_CNT + CONSUMER_CNT; i++) wait(NULL);
 
   // release shared memory and semaphore
