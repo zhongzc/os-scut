@@ -21,16 +21,16 @@ int main(int argc, char const *argv[]) {
 
   sem_wait(sem_consumers_mutex);
   if (csm->size == MAX_LEN) {
-    printf("Consumer %d: too many consumers, gone\n", getpid());
+    printf(C_GONE_MSG, getpid());
     sem_post(sem_consumers_mutex);
   } else if (csm->size == 0) {
     csm->size++;
-    printf("Consumer %d: a new consumer to wake up the barber\n", getpid());
+    printf(C_WAKE_MSG, getpid());
     sem_post(sem_consumers_mutex);
     sem_post(sem_barber_wakeup);
   } else {
     csm->size++;
-    printf("Consumer %d: coming a new consumer, there are %d now\n", getpid(), csm->size);
+    printf(C_COME_MSG, getpid(), csm->size);
     sem_post(sem_consumers_mutex);
   }
   sem_wait(sem_consumers_mutex);

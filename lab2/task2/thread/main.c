@@ -14,8 +14,8 @@ struct consumers csm;
 sem_t *sem_consumers_mutex;
 sem_t *sem_barber_wakeup;
 
-void* barber(void *);
-void* consumer(void *);
+void *barber(void *);
+void *consumer(void *);
 
 int main(void) {
   sem_consumers_mutex = sem_open(SEM_CONSUMERS_MUTEX_NAME, O_CREAT, PERM, SEM_CONSUMERS_MUTEX_INIT_VALUE);
@@ -43,16 +43,16 @@ int main(void) {
   return 0;
 }
 
-void* barber(void *_) {
-  printf("Barber     : sleeping\n");
+void *barber(void *_) {
+  printf("%s", B_SLEEP_MSG);
   sem_wait(sem_barber_wakeup);
-  printf("Barber     : wake up\n");
+  printf("%s", B_WAKE_MSG);
 
   for (;;) {
     usleep(500000);
     sem_wait(sem_consumers_mutex);
 
-    printf("Barber     : serving 1 consumer, remaining %d\n", --csm.size);
+    printf(B_SERVE_MSG, --csm.size);
     if (csm.size == 0) {
       // done
       if (csm.done == CONSUMER_CNT) {
@@ -60,10 +60,10 @@ void* barber(void *_) {
         break;
       }
 
-      printf("Barber     : go to sleep...\n");
+      printf("%s", B_SLEEP_MSG);
       sem_post(sem_consumers_mutex);
       sem_wait(sem_barber_wakeup);
-      printf("Barber     : wake up\n");
+      printf("%s", B_WAKE_MSG);
     } else {
       sem_post(sem_consumers_mutex);
     }
@@ -71,20 +71,20 @@ void* barber(void *_) {
   return NULL;
 }
 
-void* consumer(void *p) {
+void *consumer(void *p) {
   int id = *(int *)p;
   sem_wait(sem_consumers_mutex);
   if (csm.size == MAX_LEN) {
-    printf("Consumer %2d: too many consumers, gone\n", id);
+    printf(C_GONE_MSG, id);
     sem_post(sem_consumers_mutex);
   } else if (csm.size == 0) {
     csm.size++;
-    printf("Consumer %2d: a new consumer to wake up the barber\n", id);
+    printf(C_WAKE_MSG, id);
     sem_post(sem_consumers_mutex);
     sem_post(sem_barber_wakeup);
   } else {
     csm.size++;
-    printf("Consumer %2d: coming a new consumer, there are %d now\n", id, csm.size);
+    printf(C_COME_MSG, id, csm.size);
     sem_post(sem_consumers_mutex);
   }
   sem_wait(sem_consumers_mutex);

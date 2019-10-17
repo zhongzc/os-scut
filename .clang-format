@@ -1,4 +1,4 @@
 BasedOnStyle: Google
 DerivePointerAlignment: false
 PointerAlignment: Right
-ColumnLimit: 80
+ColumnLimit: 120

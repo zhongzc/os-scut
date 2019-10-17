@@ -19,15 +19,15 @@ int main(int argc, char const *argv[]) {
   sem_t *sem_barber_wakeup = sem_open(SEM_BARBER_WAKEUP_NAME, O_RDWR);
   sem_t *sem_consumers_mutex = sem_open(SEM_CONSUMERS_MUTEX_NAME, O_RDWR);
 
-  printf("Barber   %d: sleeping\n", getpid());
+  printf(B_SLEEP_MSG, getpid());
   sem_wait(sem_barber_wakeup);
-  printf("Barber   %d: wake up\n", getpid());
+  printf(B_WAKE_MSG, getpid());
 
   for (;;) {
     usleep(500000);
     sem_wait(sem_consumers_mutex);
 
-    printf("Barber   %d: serving 1 consumer, remaining %d\n", getpid(), --csm->size);
+    printf(B_SERVE_MSG, getpid(), --csm->size);
     if (csm->size == 0) {
       // done
       if (csm->done == CONSUMER_CNT) {
@@ -35,10 +35,10 @@ int main(int argc, char const *argv[]) {
         break;
       }
 
-      printf("Barber   %d: go to sleep...\n", getpid());
+      printf(B_SLEEP_MSG, getpid());
       sem_post(sem_consumers_mutex);
       sem_wait(sem_barber_wakeup);
-      printf("Barber   %d: wake up\n", getpid());
+      printf(B_WAKE_MSG, getpid());
     } else {
       sem_post(sem_consumers_mutex);
     }

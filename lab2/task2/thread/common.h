@@ -17,3 +17,10 @@ struct consumers {
   int size;
   int done;
 };
+
+const char *C_COME_MSG  = "Consumer %2d: coming a new consumer, there are %d now\n";
+const char *C_GONE_MSG  = "Consumer %2d: too many consumers, gone\n";
+const char *C_WAKE_MSG  = "Consumer %2d: a new consumer to wake up the barber\n";
+const char *B_SERVE_MSG = "Barber     : serving 1 consumer, remaining %d\n";
+const char *B_SLEEP_MSG = "Barber     : go to sleep...\n";
+const char *B_WAKE_MSG  = "Barber     : wake up\n";

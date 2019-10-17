@@ -30,3 +30,15 @@ struct rw_table {
   struct waiting_table waiting_table;
   struct accessing_table accessing_table;
 };
+
+const char *R_COME_MSG = "Reader %3d: a reader is coming\n";
+const char *R_WAIT_MSG = "Reader %3d: waiting             (waiting-reader: %2d -> %2d, waiting-writer:       %2d)\n";
+const char *R_NOTW_MSG = "Reader %3d: no need to wait     (waiting-reader: %2d -> %2d, waiting-writer:       %2d)\n";
+const char *R_ACCE_MSG = "Reader %3d: accessing           [viewing-reader: %2d -> %2d, viewing-writer:       %2d]\n";
+const char *R_GONE_MSG = "Reader %3d: leaving             [viewing-reader: %2d -> %2d, viewing-writer:       %2d]\n";
+
+const char *W_COME_MSG = "Writer %3d: a writer is coming\n";
+const char *W_WAIT_MSG = "Writer %3d: waiting             (waiting-reader:       %2d, waiting-writer: %2d -> %2d)\n";
+const char *W_NOTW_MSG = "Writer %3d: no need to wait     (waiting-reader:       %2d, waiting-writer: %2d -> %2d)\n";
+const char *W_ACCE_MSG = "Writer %3d: accessing           [viewing-reader:       %2d, viewing-writer: %2d -> %2d]\n";
+const char *W_GONE_MSG = "Writer %3d: leaving             [viewing-reader:       %2d, viewing-writer: %2d -> %2d]\n";
