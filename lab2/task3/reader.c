@@ -27,7 +27,7 @@ int main(int argc, char const *argv[]) {
   usleep(rand() % 1000000 + idx * 100000);
   printf(R_COME_MSG, idx);
   sem_wait(sem_table_mutex);
-  if (rwt->waiting_table.writer || rwt->accessing_table.writer) {
+  while (rwt->waiting_table.writer || rwt->accessing_table.writer) {
     rwt->waiting_table.reader++;
     sem_post(sem_table_mutex);
     printf(R_WAIT_MSG, idx, rwt->waiting_table.reader - 1, rwt->waiting_table.reader, rwt->waiting_table.writer);

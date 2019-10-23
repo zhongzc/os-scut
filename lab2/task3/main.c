@@ -28,9 +28,6 @@ void exec_writer(int i) {
 }
 
 int main(void) {
-  sem_unlink(SEM_READABLE_NAME);
-  sem_unlink(SEM_WRITABLE_NAME);
-  sem_unlink(SEM_TABLE_MUTEX_NAME);
   // shared memory allocating
   key_t semkey = ftok(FTOK_PATH, FTOK_ID);
   int shmid = shmget(semkey, sizeof(struct rw_table), IPC_CREAT | PERM);
