@@ -1,18 +1,27 @@
 .PHONY: all clean
 
-CC = clang
+CC = gcc
 
 all: main
 	./main
 
-main: main.c reader writer
-	${CC} main.c -o main -lpthread
+main: main.o reader writer
+	${CC} main.o -o main -lpthread
 
-reader: reader.c
-	${CC} reader.c -o reader -lpthread
+main.o: main.c
+	${CC} main.c -c
 
-writer: writer.c
-	${CC} writer.c -o writer -lpthread
+reader: reader.o
+	${CC} reader.o -o reader -lpthread
+
+reader.o: reader.c
+	${CC} reader.c -c
+
+writer: writer.o
+	${CC} writer.o -o writer -lpthread
+
+writer.o: writer.c
+	${CC} writer.c -c
 
 clean:
-	rm main reader writer
+	rm main reader writer *.o

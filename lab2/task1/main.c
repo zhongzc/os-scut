@@ -13,7 +13,7 @@
 
 void exec_producer(int i) {
   if (fork() == 0) {
-    execl(PRODUCER, PRODUCER, i ? "1" : "0", 0);
+    execl(PRODUCER, PRODUCER, i ? "1" : "0", NULL);
   }
 }
 
@@ -21,7 +21,7 @@ void exec_consumer(int i) {
   if (fork() == 0) {
     char idx[4];
     sprintf(idx, "%2d", i);
-    execl(CONSUMER, CONSUMER, idx, 0);
+    execl(CONSUMER, CONSUMER, idx, NULL);
   }
 }
 
@@ -32,8 +32,10 @@ int main(void) {
   struct queue *q = shmat(shmid, NULL, 0);
 
   // semaphore allocating
-  sem_t *sem_queue_len = sem_open(SEM_QUEUE_LEN_NAME, O_CREAT, PERM, SEM_QUEUE_LEN_INIT_VALUE);
-  sem_t *sem_queue_mutex = sem_open(SEM_QUEUE_MUTEX_NAME, O_CREAT, PERM, SEM_QUEUE_MUTEX_INIT_VALUE);
+  sem_t *sem_queue_len =
+      sem_open(SEM_QUEUE_LEN_NAME, O_CREAT, PERM, SEM_QUEUE_LEN_INIT_VALUE);
+  sem_t *sem_queue_mutex =
+      sem_open(SEM_QUEUE_MUTEX_NAME, O_CREAT, PERM, SEM_QUEUE_MUTEX_INIT_VALUE);
   sem_close(sem_queue_len);
   sem_close(sem_queue_mutex);
 

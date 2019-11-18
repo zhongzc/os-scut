@@ -1,18 +1,27 @@
 .PHONY: all clean
 
-CC = clang
+CC = gcc
 
 all: main
 	./main
 
-main: main.c barber consumer
-	${CC} main.c -o main -lpthread
+main: main.o barber consumer
+	${CC} main.o -o main -lpthread
 
-barber: barber.c
-	${CC} barber.c -o barber -lpthread
+main.o: main.c
+	${CC} main.c -c
 
-consumer: consumer.c
-	${CC} consumer.c -o consumer -lpthread
+barber: barber.o
+	${CC} barber.o -o barber -lpthread
+
+barber.o: barber.c
+	${CC} barber.c -c
+
+consumer: consumer.o
+	${CC} consumer.o -o consumer -lpthread
+
+consumer.o: consumer.c
+	${CC} consumer.c -c
 
 clean:
-	rm main barber consumer
+	rm main barber consumer *.o

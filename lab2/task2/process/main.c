@@ -13,13 +13,13 @@
 
 void exec_barber() {
   if (fork() == 0) {
-    execl(BARBER, BARBER, 0);
+    execl(BARBER, BARBER, NULL);
   }
 }
 
 void exec_consumer() {
   if (fork() == 0) {
-    execl(CONSUMER, CONSUMER, 0);
+    execl(CONSUMER, CONSUMER, NULL);
   }
 }
 
@@ -30,8 +30,10 @@ int main(void) {
   struct consumers *csm = shmat(shmid, NULL, 0);
 
   // semaphore allocating
-  sem_t *sem_consumers_mutex = sem_open(SEM_CONSUMERS_MUTEX_NAME, O_CREAT, PERM, SEM_CONSUMERS_MUTEX_INIT_VALUE);
-  sem_t *sem_barber_wakeup = sem_open(SEM_BARBER_WAKEUP_NAME, O_CREAT, PERM, SEM_BARBER_WAKEUP_INIT_VALUE);
+  sem_t *sem_consumers_mutex = sem_open(SEM_CONSUMERS_MUTEX_NAME, O_CREAT, PERM,
+                                        SEM_CONSUMERS_MUTEX_INIT_VALUE);
+  sem_t *sem_barber_wakeup = sem_open(SEM_BARBER_WAKEUP_NAME, O_CREAT, PERM,
+                                      SEM_BARBER_WAKEUP_INIT_VALUE);
   sem_close(sem_consumers_mutex);
   sem_close(sem_barber_wakeup);
 

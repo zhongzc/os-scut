@@ -17,13 +17,13 @@ const int SEM_QUEUE_LEN_INIT_VALUE = 0;
 const char *const SEM_QUEUE_MUTEX_NAME = "/queue_mutex";
 const int SEM_QUEUE_MUTEX_INIT_VALUE = 1;
 
-const int BUF_SIZE = 32 - sizeof(int) * 4;
+#define BUF_SIZE (32 - sizeof(int) * 4)
 struct queue {
-    int size;
-    int pro_idx;
-    int con_idx;
-    char buf[BUF_SIZE];
-    int done;
+  int size;
+  int pro_idx;
+  int con_idx;
+  char buf[BUF_SIZE];
+  int done;
 };
 
 const int FULL = 1;

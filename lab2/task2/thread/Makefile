@@ -1,12 +1,15 @@
 .PHONY: all clean
 
-CC = clang
+CC = gcc
 
 all: main
 	./main
 
-main: main.c
-	${CC} main.c -o main -lpthread
+main: main.o
+	${CC} main.o -o main -lpthread
+
+main.o: main.c
+	${CC} main.c -c
 
 clean:
-	rm main
+	rm main *.o

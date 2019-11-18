@@ -30,23 +30,29 @@ int main(int argc, char const *argv[]) {
   while (rwt->waiting_table.writer || rwt->accessing_table.writer) {
     rwt->waiting_table.reader++;
     sem_post(sem_table_mutex);
-    printf(R_WAIT_MSG, idx, rwt->waiting_table.reader - 1, rwt->waiting_table.reader, rwt->waiting_table.writer);
+    printf(R_WAIT_MSG, idx, rwt->waiting_table.reader - 1,
+           rwt->waiting_table.reader, rwt->waiting_table.writer);
     sem_wait(sem_readable);  // waiting for notification
     sem_wait(sem_table_mutex);
     rwt->waiting_table.reader--;
-    if (rwt->waiting_table.reader > 0 && rwt->waiting_table.writer == 0) sem_post(sem_readable);
-    printf(R_NOTW_MSG, idx, rwt->waiting_table.reader + 1, rwt->waiting_table.reader, rwt->waiting_table.writer);
+    if (rwt->waiting_table.reader > 0 && rwt->waiting_table.writer == 0)
+      sem_post(sem_readable);
+    printf(R_NOTW_MSG, idx, rwt->waiting_table.reader + 1,
+           rwt->waiting_table.reader, rwt->waiting_table.writer);
   }
   rwt->accessing_table.reader++;
-  printf(R_ACCE_MSG, idx, rwt->accessing_table.reader - 1, rwt->accessing_table.reader, rwt->accessing_table.writer);
+  printf(R_ACCE_MSG, idx, rwt->accessing_table.reader - 1,
+         rwt->accessing_table.reader, rwt->accessing_table.writer);
   sem_post(sem_table_mutex);
 
   usleep(rand() % 300000);
 
   sem_wait(sem_table_mutex);
   rwt->accessing_table.reader--;
-  printf(R_GONE_MSG, idx, rwt->accessing_table.reader + 1, rwt->accessing_table.reader, rwt->accessing_table.writer);
-  if (rwt->waiting_table.writer > 0 && rwt->accessing_table.reader == 0) sem_post(sem_writable);
+  printf(R_GONE_MSG, idx, rwt->accessing_table.reader + 1,
+         rwt->accessing_table.reader, rwt->accessing_table.writer);
+  if (rwt->waiting_table.writer > 0 && rwt->accessing_table.reader == 0)
+    sem_post(sem_writable);
   sem_post(sem_table_mutex);
 
   // close shared memory and semaphore

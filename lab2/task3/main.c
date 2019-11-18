@@ -15,7 +15,7 @@ void exec_reader(int i) {
   if (fork() == 0) {
     char idx[4];
     sprintf(idx, "%d", i);
-    execl(READER, READER, idx, 0);
+    execl(READER, READER, idx, NULL);
   }
 }
 
@@ -23,7 +23,7 @@ void exec_writer(int i) {
   if (fork() == 0) {
     char idx[4];
     sprintf(idx, "%d", i);
-    execl(WRITER, WRITER, idx, 0);
+    execl(WRITER, WRITER, idx, NULL);
   }
 }
 
@@ -34,16 +34,19 @@ int main(void) {
   struct rw_table *rwt = shmat(shmid, NULL, 0);
 
   // semaphore allocating
-  sem_t *sem_readable    = sem_open(SEM_READABLE_NAME, O_CREAT, PERM, SEM_READABLE_INIT_VALUE);
-  sem_t *sem_writable    = sem_open(SEM_WRITABLE_NAME, O_CREAT, PERM, SEM_WRITABLE_INIT_VALUE);
-  sem_t *sem_table_mutex = sem_open(SEM_TABLE_MUTEX_NAME, O_CREAT, PERM, SEM_TABLE_MUTEX_INIT_VALUE);
+  sem_t *sem_readable =
+      sem_open(SEM_READABLE_NAME, O_CREAT, PERM, SEM_READABLE_INIT_VALUE);
+  sem_t *sem_writable =
+      sem_open(SEM_WRITABLE_NAME, O_CREAT, PERM, SEM_WRITABLE_INIT_VALUE);
+  sem_t *sem_table_mutex =
+      sem_open(SEM_TABLE_MUTEX_NAME, O_CREAT, PERM, SEM_TABLE_MUTEX_INIT_VALUE);
   sem_close(sem_readable);
   sem_close(sem_writable);
   sem_close(sem_table_mutex);
 
   // init length of consumer waiting queue
-  rwt->waiting_table.reader = rwt->waiting_table.writer = \
-  rwt->accessing_table.reader = rwt->accessing_table.writer = 0;
+  rwt->waiting_table.reader = rwt->waiting_table.writer =
+      rwt->accessing_table.reader = rwt->accessing_table.writer = 0;
   shmdt(rwt);
 
   // exec producer and consumer program

@@ -18,8 +18,10 @@ void *barber(void *);
 void *consumer(void *);
 
 int main(void) {
-  sem_consumers_mutex = sem_open(SEM_CONSUMERS_MUTEX_NAME, O_CREAT, PERM, SEM_CONSUMERS_MUTEX_INIT_VALUE);
-  sem_barber_wakeup = sem_open(SEM_BARBER_WAKEUP_NAME, O_CREAT, PERM, SEM_BARBER_WAKEUP_INIT_VALUE);
+  sem_consumers_mutex = sem_open(SEM_CONSUMERS_MUTEX_NAME, O_CREAT, PERM,
+                                 SEM_CONSUMERS_MUTEX_INIT_VALUE);
+  sem_barber_wakeup = sem_open(SEM_BARBER_WAKEUP_NAME, O_CREAT, PERM,
+                               SEM_BARBER_WAKEUP_INIT_VALUE);
   csm.size = csm.done = 0;
 
   pthread_t barber_th;
