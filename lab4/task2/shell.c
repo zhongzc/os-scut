@@ -176,21 +176,21 @@ void runCommom(struct cmd *cmd) {
   }
 }
 
+void handlePipe(int *p, int isSrc) {
+    closeit(p[!isSrc]);
+    closeit(isSrc);
+    dupit(p[isSrc]);
+    closeit(p[isSrc]);
+}
 void runPipe(struct cmd *left, struct cmd *right) {
   int p[2];
   pipeit(p);
   int f1 = forkit();
   if (f1 == 0) {
-    closeit(p[0]);
-    closeit(1);
-    dupit(p[1]);
-    closeit(p[1]);
+    handlePipe(p, 1);
     runCommom(left);
   } else {
-    closeit(p[1]);
-    closeit(0);
-    dupit(p[0]);
-    closeit(p[0]);
+    handlePipe(p, 0);
     runCmd(right);
 
     waitpidit(f1);
