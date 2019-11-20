@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include "doit.h"
 
 // Checked version System call
 int forkit() {

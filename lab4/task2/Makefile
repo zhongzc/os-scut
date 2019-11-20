@@ -1,15 +1,24 @@
 .PHONY: all clean
 
-CC = gcc
+CC = clang
 
 all: main
 	./main
 
-main: main.o
-	${CC} shell.o -o main
+main: shell.o parser.o runner.o doit.o
+	${CC} shell.o parser.o runner.o doit.o -o main
 
-main.o: shell.c
+shell.o: shell.c
 	${CC} shell.c -c
+
+parser.o: parser.c
+	${CC} parser.c -c
+
+runner.o: runner.c
+	${CC} runner.c -c
+
+doit.o: doit.c
+	${CC} doit.c -c
 
 clean:
 	rm main *.o
