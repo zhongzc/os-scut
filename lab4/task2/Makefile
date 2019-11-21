@@ -1,6 +1,6 @@
 .PHONY: all clean
 
-CC = clang
+CC = gcc
 
 all: main
 	./main
