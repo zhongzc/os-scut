@@ -31,7 +31,11 @@ int main(int argc, char *argv[]) {
 
   pid_t pid = fork();
   if (pid == 0) {
-    execvp(argv[1], &argv[1]);
+    int f = execvp(argv[1], &argv[1]);
+    if (f < 0) {
+      fprintf(stderr, "exec fail\n");
+      exit(-1);
+    }
   }
   waitpid(pid, NULL, 0);
   struct timeval t2;
