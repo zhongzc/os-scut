@@ -1,3 +1,6 @@
+#ifndef FILE_COMMON
+#define FILE_COMMON
+
 const int PRODUCT_CNT = 30;
 
 const char *const PRODUCER = "./producer";
@@ -27,3 +30,5 @@ struct queue {
 };
 
 const int FULL = 1;
+
+#endif /* !FILE_COMMON */

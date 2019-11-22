@@ -1,3 +1,5 @@
+#ifndef FILE_COMMON
+#define FILE_COMMON
 
 const char *const READER = "./reader";
 const int READER_CNT = 10;
@@ -42,3 +44,6 @@ const char *W_WAIT_MSG = "Writer %3d: waiting             (waiting-reader:      
 const char *W_NOTW_MSG = "Writer %3d: no need to wait     (waiting-reader:       %2d, waiting-writer: %2d -> %2d)\n";
 const char *W_ACCE_MSG = "Writer %3d: accessing           [viewing-reader:       %2d, viewing-writer: %2d -> %2d]\n";
 const char *W_GONE_MSG = "Writer %3d: leaving             [viewing-reader:       %2d, viewing-writer: %2d -> %2d]\n";
+
+
+#endif /* !FILE_COMMON */
