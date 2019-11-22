@@ -125,7 +125,6 @@ const char *parseArgs(int argc, char const *argv[], struct option *opt) {
 
   int idx = 3;
   while (idx < argc) {
-    printf("%s\n", argv[idx]);
     if (sameStr(argv[idx], "-name")) {
       idx++;
       parseName(&idx, argv, opt);
