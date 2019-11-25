@@ -235,6 +235,7 @@ $ cd lab4
     ```
     
     - 执行
+    
     推荐安装`rlwrap`获得更好的体验，如命令历史记录、路径补全等。
     ```sh
     $ sudo apt-get install rlwrap

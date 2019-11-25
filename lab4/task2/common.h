@@ -2,7 +2,9 @@
 #define FILE_COMMON
 
 #include <libgen.h>
+#include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 #define MAXARGV 16
@@ -30,7 +32,6 @@ char buf[512];
 // Parsed command
 struct pipecmd p;
 
-static char PROMPT[] = "@ ";
 static char cwd[256];
 static void updateCwd() {
   if (getcwd(cwd, sizeof(cwd)) != NULL) {
@@ -38,6 +39,6 @@ static void updateCwd() {
     memmove(cwd, b, strlen(b) + 1);
   }
 }
-static void printPrompt() { printf("%s %s", cwd, PROMPT); }
+static void printPrompt() { printf("%s> ", cwd); }
 
 #endif /* !FILE_COMMON */
