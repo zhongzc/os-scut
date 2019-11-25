@@ -1,6 +1,7 @@
+#include <fcntl.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <stdlib.h>
 #include "common.h"
 #include "doit.h"
 
@@ -25,15 +26,16 @@ void runCmd(struct cmd *p) {
   }
 }
 
-void handleRedir(char rdy, int cls, char *file, const char *mode) {
+void handleRedir(char rdy, int cls, char *file, int mode, int protect) {
   if (rdy) {
     closeit(cls);
-    openit(file, mode);
+    openit(file, mode, protect);
   }
 }
 void runCommom(struct cmd *cmd) {
-  handleRedir(cmd->type & INREDIR_T, 0, cmd->inRedir, "r");
-  handleRedir(cmd->type & OUTREDIR_T, 1, cmd->outRedir, "w+");
+  handleRedir(cmd->type & INREDIR_T, 0, cmd->inRedir, O_CREAT | O_RDONLY, 0644);
+  handleRedir(cmd->type & OUTREDIR_T, 1, cmd->outRedir,
+              O_CREAT | O_WRONLY | O_TRUNC, 0644);
   if (cmd->isBackground) {
     int f = forkit();
     if (f == 0) {

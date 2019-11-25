@@ -3,7 +3,7 @@
 CC = gcc
 
 all: main
-	./main
+	command -v rlwrap >/dev/null 2>&1 && rlwrap -c ./main || echo WARNING: install rlwrap for the better experience; ./main
 
 main: shell.o parser.o runner.o doit.o
 	${CC} shell.o parser.o runner.o doit.o -o main

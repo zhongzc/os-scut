@@ -6,7 +6,7 @@
 int forkit();
 int execit(char *path, char **argv);
 int closeit(int fd);
-FILE *openit(const char *path, const char *mode);
+int openit(const char *path, int mode, int protect);
 int pipeit(int *p);
 int dupit(int d);
 int waitpidit(int pid);

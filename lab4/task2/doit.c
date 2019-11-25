@@ -1,8 +1,9 @@
+#include "doit.h"
+#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
-#include "doit.h"
 
 // Checked version System call
 int forkit() {
@@ -29,13 +30,13 @@ int closeit(int fd) {
   }
   return c;
 }
-FILE *openit(const char *path, const char *mode) {
-  FILE *f = fopen(path, mode);
-  if (f == NULL) {
+int openit(const char *path, int mode, int protect) {
+  int fd = open(path, mode, protect);
+  if (fd < 0) {
     fprintf(stderr, "sh: can not open %s\n", path);
     exit(-1);
   }
-  return f;
+  return fd;
 }
 int pipeit(int *p) {
   int r = pipe(p);
