@@ -43,7 +43,7 @@ void runCommom(struct cmd *cmd) {
     } else {
       waitpidit(f);
       printf("\n[%i] done\n", getpid());
-      printf("%s", PROMPT);
+      printPrompt();
       exit(0);
     }
   } else {

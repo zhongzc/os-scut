@@ -1,6 +1,12 @@
+#ifndef FILE_COMMON
+#define FILE_COMMON
+
+#include <libgen.h>
+#include <stdio.h>
+#include <unistd.h>
+
 #define MAXARGV 16
 #define MAXPIPE 8
-static char PROMPT[] = "@ ";
 
 struct cmd {
   char type;
@@ -23,3 +29,15 @@ struct pipecmd {
 char buf[512];
 // Parsed command
 struct pipecmd p;
+
+static char PROMPT[] = "@ ";
+static char cwd[256];
+static void updateCwd() {
+  if (getcwd(cwd, sizeof(cwd)) != NULL) {
+    char *b = basename(cwd);
+    memmove(cwd, b, strlen(b) + 1);
+  }
+}
+static void printPrompt() { printf("%s %s", cwd, PROMPT); }
+
+#endif /* !FILE_COMMON */
