@@ -24,23 +24,14 @@ $ cd lab1
 $ make task1 # 任务一
 Those output come from parent, Mon Nov 25 17:28:26 2019
 Those output come from parent, Mon Nov 25 17:28:26 2019
-Those output come from parent, Mon Nov 25 17:28:26 2019
-Those output come from parent, Mon Nov 25 17:28:26 2019
-Those output come from parent, Mon Nov 25 17:28:26 2019
-Those output come from parent, Mon Nov 25 17:28:26 2019
-Those output come from parent, Mon Nov 25 17:28:26 2019
-Those output come from parent, Mon Nov 25 17:28:26 2019[^C]
 ^CMakefile:6: recipe for target 'all' failed
 make[1]: *** [all] Interrupt
 Makefile:2: recipe for target 'task1' failed
 make: *** [task1] Interrupt
 
 $ make task2 # 任务二
-In main thread: 13885
-In main thread: 13886
-In main thread: 13887
 In main thread: 13888
-In main thread: 13889[^C]
+In main thread: 13889
 ^CMakefile:6: recipe for target 'all' failed
 make[1]: *** [all] Interrupt
 Makefile:5: recipe for target 'task2' failed
@@ -250,19 +241,19 @@ $ cd lab4
     ```
     ```sh
     $ make
-    @ ls
+    task2> ls
     common.h  doit.c  doit.h  doit.o  main	Makefile  parser.c  parser.h  parser.o	runner.c  runner.h  runner.o  shell.c  shell.o
-    @ cd ../..
-    @ find . | grep \.c$ | wc -l
+    task2> 
+    os-scut> find . | grep \.c$ | wc -l
     22
-    @ sleep 2 &
+    os-scut> sleep 2 &
     backgound: pid [26515]
-    @ ls
+    os-scut> ls
     lab1  lab2  lab3  lab4	README.md
-    @ 
+    os-scut> 
     [26515] done
-    @ ls -all > ls.output
-    @ cat ls.output
+    os-scut> ls -all > ls.output
+    os-scut> cat ls.output
     total 48
     drwxr-xr-x 8 gaufoo gaufoo 4096 11月 25 17:49 .
     drwxr-xr-x 3 gaufoo gaufoo 4096 11月 18 10:29 ..
@@ -276,7 +267,7 @@ $ cd lab4
     -rw-r--r-- 1 gaufoo gaufoo    0 11月 25 17:49 ls.output
     -rw-r--r-- 1 gaufoo gaufoo 5100 11月 18 10:29 README.md
     drwxrwxr-x 2 gaufoo gaufoo 4096 11月 20 17:07 .vscode
-    @ exit
+    os-scut> exit
     ```
     
     - 清理
