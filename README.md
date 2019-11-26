@@ -79,25 +79,17 @@ $ cd lab2
         ```sh
         $ make task1/full
         ```
-    
+
     - 任务二
-        - 理发师忙进程版本
+        - 理发师忙
         ```sh
-        $ make task2/proc/busy
+        $ make task2/busy
         ```
-        - 理发师忙线程版本
+        - 理发师闲
         ```sh
-        $ make task2/thrd/busy
+        $ make task2/free
         ```
-        - 理发师闲进程版本
-        ```sh
-        $ make task2/proc/free
-        ```
-        - 理发师闲线程版本
-        ```sh
-        $ make task2/thrd/free
-        ```
-    
+
     - 任务三
         ```sh
         $ make task3

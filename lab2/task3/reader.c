@@ -62,7 +62,7 @@ int main(int argc, char const *argv[]) {
 
   if (rwt->wt.w > 0 && rwt->at.r == 0) /* here the last reader,
                                           and there are waiting
-                                          writer */
+                                          writers */
   {
     up(sem_writable);  // inform a writer
   }
