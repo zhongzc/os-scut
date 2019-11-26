@@ -45,8 +45,8 @@ int main(void) {
   sem_close(sem_table_mutex);
 
   // init length of consumer waiting queue
-  rwt->waiting_table.reader = rwt->waiting_table.writer =
-      rwt->accessing_table.reader = rwt->accessing_table.writer = 0;
+  rwt->wt.r = rwt->wt.w =
+      rwt->at.r = rwt->at.w = 0;
   shmdt(rwt);
 
   // exec producer and consumer program

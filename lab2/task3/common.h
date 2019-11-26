@@ -1,5 +1,14 @@
 #ifndef FILE_COMMON
 #define FILE_COMMON
+#include <semaphore.h>
+
+void up(sem_t *s) {
+  sem_post(s);
+}
+
+void down(sem_t *s) {
+  sem_wait(s);
+}
 
 const char *const READER = "./reader";
 const int READER_CNT = 10;
@@ -19,18 +28,18 @@ const char *const SEM_TABLE_MUTEX_NAME = "/table_mutex";
 const int SEM_TABLE_MUTEX_INIT_VALUE = 1;
 
 struct waiting_table {
-  int writer;
-  int reader;
+  int w;
+  int r;
 };
 
 struct accessing_table {
-  int writer;
-  int reader;
+  int w;
+  int r;
 };
 
 struct rw_table {
-  struct waiting_table waiting_table;
-  struct accessing_table accessing_table;
+  struct waiting_table wt;
+  struct accessing_table at;
 };
 
 const char *R_COME_MSG = "Reader %3d: a reader is coming\n";
