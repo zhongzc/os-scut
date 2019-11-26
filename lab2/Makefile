@@ -8,24 +8,14 @@ task1/empty: FORCE
 	sed -i 's/FULL = 1/FULL = 0/g' common.h && \
 	make && make clean && cd ..
 
-task2/thrd/busy: FORCE
-	cd task2/thread && \
-	sed -i 's/FREE = 1/FREE = 0/g' common.h && \
+task2/busy: FORCE
+	cd task2 && \
+	sed -i 's/FREE = 1/FREE = 0/g' common.c && \
 	make && make clean && cd ../..
 
-task2/thrd/free: FORCE
-	cd task2/thread && \
-	sed -i 's/FREE = 0/FREE = 1/g' common.h && \
-	make && make clean && cd ../..
-
-task2/proc/busy: FORCE
-	cd task2/process && \
-	sed -i 's/FREE = 1/FREE = 0/g' common.h && \
-	make && make clean && cd ../..
-
-task2/proc/free: FORCE
-	cd task2/process && \
-	sed -i 's/FREE = 0/FREE = 1/g' common.h && \
+task2/free: FORCE
+	cd task2 && \
+	sed -i 's/FREE = 0/FREE = 1/g' common.c && \
 	make && make clean && cd ../..
 
 task3: FORCE
