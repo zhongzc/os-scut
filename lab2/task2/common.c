@@ -20,9 +20,9 @@ char *SEM_BARBER_WAKEUP_NAME = "/barber_wakeup";
 int SEM_BARBER_WAKEUP_INIT_VALUE = 0;
 
 int FREE = 1;
-char *C_COME_MSG = "Consumer %2d: coming a new customer, there are %d now\n";
-char *C_GONE_MSG = "Consumer %2d: too many customers, gone\n";
-char *C_WAKE_MSG = "Consumer %2d: a new customer to wake up the barber\n";
+char *C_COME_MSG = "Customer %2d: coming a new customer, there are %d now\n";
+char *C_GONE_MSG = "Customer %2d: too many customers, gone\n";
+char *C_WAKE_MSG = "Customer %2d: a new customer to wake up the barber\n";
 char *B_SERVE_MSG = "Barber     : serving 1 customer, remaining %d\n";
 char *B_SLEEP_MSG = "Barber     : go to sleep...\n";
 char *B_WAKE_MSG = "Barber     : wake up\n";
