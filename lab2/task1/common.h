@@ -1,5 +1,10 @@
 #ifndef FILE_COMMON
 #define FILE_COMMON
+#include <semaphore.h>
+
+void up(sem_t *s) { sem_post(s); }
+
+void down(sem_t *s) { sem_wait(s); }
 
 const int PRODUCT_CNT = 30;
 

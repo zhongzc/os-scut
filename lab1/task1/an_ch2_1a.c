@@ -3,11 +3,11 @@
 #include <time.h>
 #include <unistd.h>
 
-int main() {
+int main(int argc, char const *argv[]) {
   pid_t pid = fork();
 
   if (pid == 0) {
-    const char* CHILD = "./an_ch2_1b";
+    const char *CHILD = "./an_ch2_1b";
     execl(CHILD, CHILD, 0);
   } else {
     while (1) {

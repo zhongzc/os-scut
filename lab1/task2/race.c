@@ -5,7 +5,7 @@ void *subOne(void *ptr);
 
 int shared_var = 0;
 
-int main() {
+int main(int argc, char const *argv[]) {
   pthread_t thread;
   pthread_create(&thread, NULL, subOne, NULL);
 

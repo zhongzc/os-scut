@@ -11,24 +11,24 @@
 
 const char *MSG = "producer %2d: put   '%c',   buffer size: %d\n";
 
+struct queue *q;
+sem_t *sem_queue_len;
+sem_t *sem_queue_mutex;
+
+void setUp();
+void cleanUp();
+void nap();
+
 int main(int argc, char const *argv[]) {
   int cap = atoi(argv[1]);
-
-  // fetch shared memory
-  key_t semkey = ftok(FTOK_PATH, FTOK_ID);
-  int shmid = shmget(semkey, sizeof(struct queue), PERM);
-  struct queue *q = shmat(shmid, NULL, 0);
-
-  // fetch semaphore
-  sem_t *sem_queue_len = sem_open(SEM_QUEUE_LEN_NAME, O_RDWR);
-  sem_t *sem_queue_mutex = sem_open(SEM_QUEUE_MUTEX_NAME, O_RDWR);
+  setUp();
 
   for (int i = 0; i < PRODUCT_CNT; i++) {
-    usleep(rand() % 100000);
+    nap();
 
-    sem_wait(sem_queue_mutex);
-    if (q->size == BUF_SIZE) {
-      sem_post(sem_queue_mutex);
+    down(sem_queue_mutex);
+    if (q->size == BUF_SIZE /* queue is full */) {
+      up(sem_queue_mutex);
       i--;
       continue;
     }
@@ -37,22 +37,44 @@ int main(int argc, char const *argv[]) {
     char c = (cap ? 'A' : 'a') + char_idx;
     char_idx = (char_idx + 1) % 26;
 
-    q->size++;
-    q->buf[q->pro_idx] = c;
-    q->pro_idx = (q->pro_idx + 1) % BUF_SIZE;
+    /* Produce a product */
+    q->buf[q->pro_idx] = c;                    // fill the product
+    q->pro_idx = (q->pro_idx + 1) % BUF_SIZE;  // update product index
+    q->size++;                                 // update product count
     printf(MSG, cap, c, q->size);
 
-    sem_post(sem_queue_mutex);
-    sem_post(sem_queue_len);
+    up(sem_queue_mutex);
+    up(sem_queue_len);
   }
-  sem_wait(sem_queue_mutex);
-  q->done++;
-  sem_post(sem_queue_mutex);
-  sem_post(sem_queue_len);
 
+  /* done */
+  down(sem_queue_mutex);
+  q->done++;
+  up(sem_queue_mutex);
+
+  /* inform the consumers */
+  up(sem_queue_len);
+
+  cleanUp();
+  return 0;
+}
+
+void nap() { usleep(rand() % 100000); }
+
+void setUp() {
+  // fetch shared memory
+  key_t semkey = ftok(FTOK_PATH, FTOK_ID);
+  int shmid = shmget(semkey, sizeof(struct queue), PERM);
+  q = shmat(shmid, NULL, 0);
+
+  // fetch semaphore
+  sem_queue_len = sem_open(SEM_QUEUE_LEN_NAME, O_RDWR);
+  sem_queue_mutex = sem_open(SEM_QUEUE_MUTEX_NAME, O_RDWR);
+}
+
+void cleanUp() {
   // close shared memory and semaphore
   sem_close(sem_queue_len);
   sem_close(sem_queue_mutex);
   shmdt(q);
-  return 0;
 }

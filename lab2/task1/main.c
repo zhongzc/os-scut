@@ -31,6 +31,11 @@ int main(void) {
   int shmid = shmget(semkey, sizeof(struct queue), IPC_CREAT | PERM);
   struct queue *q = shmat(shmid, NULL, 0);
 
+  // init queue
+  q->size = q->pro_idx = q->con_idx = q->done = 0;
+  memset(q->buf, 0, BUF_SIZE);
+  shmdt(q);
+
   // semaphore allocating
   sem_t *sem_queue_len =
       sem_open(SEM_QUEUE_LEN_NAME, O_CREAT, PERM, SEM_QUEUE_LEN_INIT_VALUE);
@@ -38,11 +43,6 @@ int main(void) {
       sem_open(SEM_QUEUE_MUTEX_NAME, O_CREAT, PERM, SEM_QUEUE_MUTEX_INIT_VALUE);
   sem_close(sem_queue_len);
   sem_close(sem_queue_mutex);
-
-  // init queue
-  q->size = q->pro_idx = q->con_idx = q->done = 0;
-  memset(q->buf, 0, BUF_SIZE);
-  shmdt(q);
 
   // exec producer and consumer program
   for (int i = 0; i < PRODUCER_CNT; i++) exec_producer(i);
