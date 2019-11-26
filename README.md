@@ -244,7 +244,7 @@ $ cd lab4
     $ make
     task2> ls
     common.h  doit.c  doit.h  doit.o  main	Makefile  parser.c  parser.h  parser.o	runner.c  runner.h  runner.o  shell.c  shell.o
-    task2> 
+    task2> cd ../..
     os-scut> find . | grep \.c$ | wc -l
     22
     os-scut> sleep 2 &
