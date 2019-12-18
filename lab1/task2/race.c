@@ -3,7 +3,7 @@
 
 void *subOne(void *ptr);
 
-int shared_var = 0;
+static volatile int shared_var = 0;
 
 int main(int argc, char const *argv[]) {
   pthread_t thread;
