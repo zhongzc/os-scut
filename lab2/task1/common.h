@@ -34,6 +34,6 @@ struct queue {
   int done;
 };
 
-const int FULL = 1;
+const int FULL = 0;
 
 #endif /* !FILE_COMMON */

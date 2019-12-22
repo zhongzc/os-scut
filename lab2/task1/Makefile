@@ -17,10 +17,10 @@ producer: producer.o
 consumer: consumer.o
 	${CC} consumer.o -o consumer -lpthread
 
-producer.o: producer.c
+producer.o: producer.c common.h
 	${CC} producer.c -c
 
-consumer.o: consumer.c
+consumer.o: consumer.c common.h
 	${CC} consumer.c -c
 
 clean:

@@ -68,7 +68,7 @@ int main(int argc, char const *argv[]) {
 
 void setUp(char const *argv[]) {
   // seed the random
-  int idx = atoi(argv[1]);
+  idx = atoi(argv[1]);
   srand(idx * time(NULL));
 
   // shared memory fetching
